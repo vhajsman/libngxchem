@@ -2,6 +2,9 @@
 #define __LIBNGXCHEM_TEMP_T_HPP
 
 namespace ngxchem {
+    /**
+     * @brief temperature data type
+     */
     struct Temp {
         double K;   // kelvin
         
@@ -25,6 +28,10 @@ namespace ngxchem {
 
         constexpr double toCelsius() const {
             return this->K - 273.15;
+        }
+
+        constexpr static Temp fromCelsius(double celsius) {
+            return Temp(celsius + 273.15);
         }
 
         constexpr double toEnergyParticle() const {
