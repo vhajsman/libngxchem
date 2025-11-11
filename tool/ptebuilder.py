@@ -21,8 +21,7 @@ def safe(row, key, default=""):
 header = """#ifndef __LIBNGXCHEM_PERIODIC_TABLE_HPP
 #define __LIBNGXCHEM_PERIODIC_TABLE_HPP
 
-#include "Element.hpp"
-#include "temp_t.hpp"
+#include "ElementClass.hpp"
 
 namespace ngxchem {
     const Element PERIODIC_TABLE[] = {
