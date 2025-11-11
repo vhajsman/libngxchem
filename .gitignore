@@ -42,3 +42,5 @@
 
 build
 .*
+
+include/libngxchem/periodic_table.hpp

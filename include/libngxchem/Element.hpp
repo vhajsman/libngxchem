@@ -5,7 +5,7 @@
 
 namespace ngxchem {
     enum class ElementTableBlock { S, P, D, F };
-    enum class ElementState { Gas, Fluid, Solid };
+    enum class ElementState { STATE_GAS, STATE_FLUID, STATE_SOLID };
 
     struct Element {
         // --- IDENTIFICATION ---
