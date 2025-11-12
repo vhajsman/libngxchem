@@ -12,6 +12,22 @@ namespace ngxchem {
         constexpr double length() const {
             return std::sqrt(x*x + y*y + z*z);
         }
+
+        constexpr Vector3 operator-(const Vector3& other) const {
+            return {
+                x - other.x, 
+                y - other.y, 
+                z - other.z
+            };
+        }
+
+        constexpr Vector3 operator+(const Vector3& other) const {
+            return {
+                x + other.x, 
+                y + other.y, 
+                z + other.z
+            };
+        }
     };
 };
 
