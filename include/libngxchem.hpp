@@ -5,5 +5,6 @@
 #include "libngxchem/ElementClass.hpp"
 #include "libngxchem/periodic_table.hpp"
 #include "libngxchem/temp_t.hpp"
+#include "libngxchem/Atom.hpp"
 
 #endif
