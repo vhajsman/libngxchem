@@ -129,13 +129,13 @@ namespace ngxchem {
         }
 
         inline void addBond() {
-            if(this->canBond()) {
+            if(this->canBond())
                 this->bonds_count++;
         }
 
         inline void removeBond() {
-            if(this.bonds_count > 0)
-                this.bonds_count--;
+            if(this->bonds_count > 0)
+                this->bonds_count--;
         }
     };
 };
