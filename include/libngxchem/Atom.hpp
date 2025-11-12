@@ -180,6 +180,17 @@ namespace ngxchem {
         constexpr Bond(Atom* atom1, Atom* atom2, BondType t = SINGLE, double k = 450.00) 
             : atom1(atom1), atom2(atom2), type(t), stiffness(k), energy(0.00), 
             rest_length(atom1 && atom2 ? (atom1->position - atom2->position).length() : 0.00) {}
+
+        /**
+         * @brief Compute current bond length
+         * 
+         * @return double bond length
+         */
+        inline double length() const {
+            return atom1 && atom2 ? (atom1->position - atom2->position).length() : 0.00;
+        }
+
+        
     };
 };
 
