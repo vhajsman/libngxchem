@@ -28,6 +28,38 @@ namespace ngxchem {
                 z + other.z
             };
         }
+
+        constexpr Vector3 operator-(const double& other) const {
+            return {
+                x - other,
+                y - other,
+                z - other
+            };
+        }
+
+        constexpr Vector3 operator+(const double& other) const {
+            return {
+                x + other, 
+                y + other, 
+                z + other
+            };
+        }
+
+        constexpr Vector3 operator/(const double& other) const {
+            return {
+                x / other, 
+                y / other, 
+                z / other
+            };
+        }
+
+        constexpr Vector3 operator*(const double& other) const {
+            return {
+                x * other, 
+                y * other, 
+                z * other
+            };
+        }
     };
 };
 
