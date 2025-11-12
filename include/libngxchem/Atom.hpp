@@ -12,7 +12,7 @@ namespace ngxchem {
      * 
      * CATION: +1, ANION: -1, NEUTRAL: 0
      */
-    typedef enum {
+    typedef enum ElCharge {
         CATION = 1,
         ANION = -1,
         NEUTRAL = 0
@@ -137,6 +137,49 @@ namespace ngxchem {
             if(this->bonds_count > 0)
                 this->bonds_count--;
         }
+    };
+
+    /**
+     * @enum BondType
+     * @brief Chemical bond type
+     */
+    typedef enum BondType {
+        SINGLE = 1,
+        DOUBLE = 2,
+        TRIPLE = 3,
+        IONIC  = 4,
+        HYDROGEN = 5
+    } BondType;
+
+    /**
+     * @struct Bond
+     * @brief Represents a chemical bond between two atoms
+     */
+    struct Bond {
+        Atom*       atom1;          // atom 1
+        Atom*       atom2;          // atom 2
+        BondType    type;           // bond type
+        double      rest_length;    // equilibrium bond length [m]
+        double      stiffness;      // bond stiffness constant [N/m]
+        double      energy;         // bond energy [J]
+
+        /**
+         * @brief Default constructor
+         */
+        constexpr Bond()
+            : atom1(nullptr), atom2(nullptr), type(SINGLE), rest_length(0.00), stiffness(0.00), energy(0.00) {}
+        
+        /**
+         * @brief Construct bond between two atoms
+         * 
+         * @param atom1 pointer to first atom
+         * @param atom2 pointer to second atom
+         * @param t type of bond (defaults to SINGLE)
+         * @param k stiffness constant (defaults to 450.00) [N/m]
+         */
+        constexpr Bond(Atom* atom1, Atom* atom2, BondType t = SINGLE, double k = 450.00) 
+            : atom1(atom1), atom2(atom2), type(t), stiffness(k), energy(0.00), 
+            rest_length(atom1 && atom2 ? (atom1->position - atom2->position).length() : 0.00) {}
     };
 };
 
