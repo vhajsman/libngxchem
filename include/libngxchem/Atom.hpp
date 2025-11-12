@@ -27,6 +27,10 @@ namespace ngxchem {
         double          energy_kinetic;     // kinetic energy [J]
         double          energy_potential;   // potential energy [J]
 
+        int             valence_electrons;  // count of valence electrons
+        int             valence_max;        // maximal chemical bound count
+        int             bonds_count;        // current count of bounds
+
         Temp            sim_temp;
 
         /**
@@ -34,7 +38,7 @@ namespace ngxchem {
          * initializes atom with neutral charge, zero velocity and energy and a null element
          */
         constexpr Atom()
-            : element(nullptr), position(), velocity(), charge(NEUTRAL), qspin(0.00), sim_temp(), energy_kinetic(0.00), energy_potential(0) {}
+            : element(nullptr), position(), velocity(), charge(NEUTRAL), qspin(0.00), sim_temp(), energy_kinetic(0.00), energy_potential(0), valence_electrons(0), valence_max(0), bonds_count(0) {}
         
         /**
          * @brief construct an atom with specific element, position, velocity and charge
@@ -45,7 +49,7 @@ namespace ngxchem {
          * @param q charge type (default NEUTRAL)
          */
         constexpr Atom(const Element* el, Vector3 pos = {}, Vector3 vel = {}, ElCharge q = NEUTRAL)
-            : element(el), position(pos), velocity(vel), charge(q), qspin(0), sim_temp(0), energy_kinetic(0), energy_potential(0) {}
+            : element(el), position(pos), velocity(vel), charge(q), qspin(0), sim_temp(0), energy_kinetic(0), energy_potential(0), valence_electrons(el ? el->group : 0), valence_max(el ? el->group : 0), bonds_count(0) {}
 
         /**
          * @brief calculate mass of the atom in kilograms
@@ -118,6 +122,20 @@ namespace ngxchem {
         inline void resetEnergy() {
             this->energy_kinetic = 0; 
             this->energy_potential = 0; 
+        }
+
+        inline bool canBond() const {
+            return this->bonds_count < this->valence_max;
+        }
+
+        inline void addBond() {
+            if(this->canBond()) {
+                this->bonds_count++;
+        }
+
+        inline void removeBond() {
+            if(this.bonds_count > 0)
+                this.bonds_count--;
         }
     };
 };
