@@ -190,7 +190,48 @@ namespace ngxchem {
             return atom1 && atom2 ? (atom1->position - atom2->position).length() : 0.00;
         }
 
-        
+        /**
+         * @brief Compute restoring force using Hooke's law
+         * 
+         * F = -k * (x - x₀)
+         */
+        inline Vector3 computeForce() const {
+            if(!this->atom1 || !this->atom2)
+                return {}; // null vector
+
+            Vector3 diff = atom2->position - atom1->position;
+            double len = diff.length();
+            if(len == 0.00)
+                return {};
+
+            double displacement = len - this->rest_length;
+            Vector3 dir = diff / len;
+            return dir * this->stiffness * displacement;
+        }
+
+        /**
+         * @brief Update potential energy stored in the bond
+         *
+         * E = 0.5 * s * x^2
+         */
+        inline void updateEnergy() {
+            double x = this->length() - this->rest_length;
+            this->energy = 0.5 * this->stiffness * x * x;
+        }
+
+        /**
+         * @brief Apply bond forces to connected atoms
+         * 
+         * @param dt simulation time step [s]
+         */
+        inline void applyForce(double dt) {
+            if(!this->atom1 || !this->atom2)
+                return;
+
+            Vector3 F = this->computeForce();
+            this->atom1->applyForce(F, dt);
+            this->atom2->applyForce(F * -1.00, dt);
+        }
     };
 };
 
